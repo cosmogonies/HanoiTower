@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\GOAT_Dialog\Assets\Logic\CLS_CameraMotion.cs">
+    <Files>
+      <File FileName="..\..\GOAT_Dialog\Assets\Logic\CLS_CameraMotion.cs" Line="494" Column="54" />
+      <File FileName="..\..\GOAT_Dialog\Assets\Logic\Camera\CameraControl.cs" Line="311" Column="3" />
+      <File FileName="..\..\GOAT_Dialog\Assets\Editor\DBG_Profiler.cs" Line="90" Column="3" />
+      <File FileName="..\..\GOAT_Dialog\Assets\Editor\PlayGroundGenerator.cs" Line="306" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

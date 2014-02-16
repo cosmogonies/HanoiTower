@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+
+Project("{B52DD358-3AD9-E290-755D-AB2150D59EE6}") = "CG_HanoiTower", "Assembly-CSharp.csproj", "{05D4ABB0-E0E1-4B43-438F-6E56E9D4B601}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05D4ABB0-E0E1-4B43-438F-6E56E9D4B601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05D4ABB0-E0E1-4B43-438F-6E56E9D4B601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05D4ABB0-E0E1-4B43-438F-6E56E9D4B601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05D4ABB0-E0E1-4B43-438F-6E56E9D4B601}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	
+EndGlobal
