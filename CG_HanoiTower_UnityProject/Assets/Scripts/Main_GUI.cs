@@ -105,7 +105,7 @@ public class Main_GUI : MonoBehaviour {
 		//base
 		GameObject myBase = Instantiate(theLibrary[0]) as GameObject;
 		myBase.name="myBase";
-		//Instantiate(theLibrary[0]) as GameObject;
+
 		
 		//Stick
 		for(int i=0;i<3;i++)
@@ -153,7 +153,8 @@ public class Main_GUI : MonoBehaviour {
 			//Nunmerotation
 			GameObject MyCurrentID = new GameObject("ID");			
 			TextMesh toto = MyCurrentID.AddComponent<TextMesh>() as TextMesh;
-			MeshRenderer blop = MyCurrentID.AddComponent<MeshRenderer>() as MeshRenderer;
+			//MeshRenderer blop = MyCurrentID.AddComponent<MeshRenderer>() as MeshRenderer;
+			MeshRenderer blop = MyCurrentID.GetComponent<MeshRenderer>() as MeshRenderer;
 			blop.material = FontMat;
 			
 			toto.text = Symbols[numberOfDiscs-i-1];
