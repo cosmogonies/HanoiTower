@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Main_GUI.cs" />
      <Compile Include="Assets\Scripts\SelfLookAt.cs" />
      <Compile Include="Assets\Scripts\SlideUV.cs" />
+     <Compile Include="Assets\Scripts\Solver.cs" />
      <Compile Include="Assets\Scripts\StaffBehaviour.cs" />
      <Compile Include="Assets\Scripts\Tool\MathUtils.cs" />
      <Compile Include="Assets\Scripts\Tool\SplineController.cs" />

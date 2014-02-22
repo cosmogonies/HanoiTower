@@ -1,11 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\GOAT_Dialog\Assets\Logic\CLS_CameraMotion.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Solver.cs">
     <Files>
-      <File FileName="..\..\GOAT_Dialog\Assets\Logic\CLS_CameraMotion.cs" Line="494" Column="54" />
-      <File FileName="..\..\GOAT_Dialog\Assets\Logic\Camera\CameraControl.cs" Line="311" Column="3" />
-      <File FileName="..\..\GOAT_Dialog\Assets\Editor\DBG_Profiler.cs" Line="90" Column="3" />
-      <File FileName="..\..\GOAT_Dialog\Assets\Editor\PlayGroundGenerator.cs" Line="306" Column="14" />
+      <File FileName="Assets\Scripts\Solver.cs" Line="117" Column="2" />
+      <File FileName="Assets\Scripts\Solver.cs" Line="151" Column="1" />
+      <File FileName="Assets\Scripts\DiscManager.cs" Line="37" Column="3" />
+      <File FileName="Assets\Scripts\MainMenu_GUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SelfLookAt.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SlideUV.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\StaffBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WinGUI.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

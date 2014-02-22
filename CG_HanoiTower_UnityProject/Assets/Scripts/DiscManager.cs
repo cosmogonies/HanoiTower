@@ -44,7 +44,7 @@ public class DiscManager : MonoBehaviour {
 		
 		currentlySelected=-1;
 		
-		
+		//Solver toto = new Solver();
 		//MLog();
 	} 
 	
@@ -303,4 +303,6 @@ public class DiscManager : MonoBehaviour {
 		Debug.Log("TheValue Is ="+MConvertToZeInt());
 		Debug.Log("=============================================");	
 	}
+
+
 }
