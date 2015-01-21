@@ -258,8 +258,8 @@ public class Main_GUI : MonoBehaviour {
 						//if( (Screen.height - Input.GetTouch(0).position.y) > TouchZoneMiddle.yMin)
 						//{   
 							//Debug.Log("STILL TOUCHING = "+Input.GetTouch(0).position.x+" , "+Input.GetTouch(0).position.y+"   and FYI="+TouchZoneMiddle.yMin);
-						Ray myFuckingRay = Camera.mainCamera.ScreenPointToRay(Input.GetTouch(0).position);
-						Vector3 myFuckingVector = myFuckingRay.GetPoint(Vector3.Distance(Camera.mainCamera.transform.position,new Vector3(0,0,0)));
+						Ray myFuckingRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+						Vector3 myFuckingVector = myFuckingRay.GetPoint(Vector3.Distance(Camera.main.transform.position,new Vector3(0,0,0)));
 						myDM.TheDiscList[currentlySelected].transform.position = myFuckingVector;
 						//}
 					}
