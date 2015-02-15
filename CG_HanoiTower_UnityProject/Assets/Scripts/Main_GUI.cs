@@ -7,8 +7,6 @@ public class Main_GUI : MonoBehaviour {
 
 	public int nbMoves;
 	
-//	private int screenButtonHeight = 32;
-	
 	public int currentlySelected = -1;
 	
 	private DiscManager myDM ;
@@ -38,12 +36,9 @@ public class Main_GUI : MonoBehaviour {
 	
 	public bool isTouching = false;
 	public bool isPushing = false;
-	//int PushingBuffer=0;
-	
-	
+
 	private const bool TOUCH_ONLY=false;
 	
-	//private string[] Symbols = {"I","II","III","IV","V","VI","VII","VIII"};
 	private string[] Symbols = {"I","II","III","VI","V","IV","IIV","IIIV","XI","X"};
 	
 	// Use this for initialization
@@ -115,8 +110,6 @@ public class Main_GUI : MonoBehaviour {
 			myStick.transform.localScale = new Vector3(0.8f,1.0f,0.8f); //Since 10 difficulty discs, we have to thicker the stick !
 			myStick.transform.Translate(-MAGIC_SeparateFactor +(i*MAGIC_SeparateFactor),0,0);
 			
-			//myDM.TheLightList[i].transform.position = new Vector3(myStick.transform.position.x,myStick.transform.position.y+1000.0f, myStick.transform.position.z);
-			//myDM.TheLightList[i].transform.position = new Vector3(myStick.transform.position.x,myStick.transform.position.y+1000.0f, 0.0f);
 			if(_style ==4)	//ScyFy	
 				myStick.AddComponent<StaffBehaviour>();
 		}
@@ -129,20 +122,19 @@ public class Main_GUI : MonoBehaviour {
 		{
 			GameObject myCurrentDisc = Instantiate(theLibrary[2]) as GameObject;
 			myCurrentDisc.name = "Disc_"+i;
-			//Debug.Log( myCurrentDisc.transform.position.y);
-			
-			
-			float ScaleOffsetY = myCurrentDisc.transform.localScale.y-(i/10.0f);
-			ScaleOffsetY = Mathf.Clamp(ScaleOffsetY,0.5f,10.0f);
-			//ScaleOffsetY=myCurrentDisc.transform.localScale.y;
-			
-			myCurrentDisc.transform.localScale = new Vector3(myCurrentDisc.transform.localScale.x-(i/10.0f),ScaleOffsetY,myCurrentDisc.transform.localScale.z-(i/10.0f)); 
+
+			float ratio = i / (float) numberOfDiscs;
+			// 0 => Scale max (1.0f)
+			// numberOfDiscs-1 => Scale min (0.5f)
+			float scaleXZ = 1.0f * (1-ratio);
+
+			float scaleY = 1.0f-ratio*0.7f;
+
+			myCurrentDisc.transform.localScale = new Vector3(scaleXZ,scaleY,scaleXZ); 
 			
 			//myCurrentDisc.transform.Translate(MAGIC_SeparateFactor,lastDiscHeight,0);
 			myCurrentDisc.transform.Translate(MAGIC_SeparateFactor,0,0);
-			
 
-			
 			if(_style!=3)//Except for Chinese Style
 				myCurrentDisc.transform.Rotate(new Vector3(0.0f,Random.Range(-25,25),0.0f));
 			
@@ -178,7 +170,7 @@ public class Main_GUI : MonoBehaviour {
 	void Update()
 	{	
 
-		//TACTILE MANAGEMENT *************************************************************************************************
+		#region TOUCH_INPUT
 		if(currentlySelected==-1)
 		{
 			if (Input.touchCount > 0) 
@@ -211,6 +203,7 @@ public class Main_GUI : MonoBehaviour {
 			{
 				isTouching=false;
 			}
+			#endregion
 		}
 		else
 		{
