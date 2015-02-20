@@ -5,9 +5,9 @@ public class Main_GUI : MonoBehaviour {
 
 	public GUISkin theProxySkin;
 
-	public int nbMoves;
+	private int nbMoves;
 	
-	public int currentlySelected = -1;
+	private int currentlySelected = -1;
 	
 	private DiscManager myDM ;
 	
@@ -15,15 +15,15 @@ public class Main_GUI : MonoBehaviour {
 	private Rect TouchZoneMiddle;
 	private Rect TouchZoneRight;
 		
-	public GameObject[] ClassicObjectsLibrary; //In order: Base, Stick, Disc, Env
-	public GameObject[] ZenObjectsLibrary;
-	public GameObject[] SteamObjectsLibrary;
-	public GameObject[] ChineseObjectsLibrary;
-	public GameObject[] SciFiObjectsLibrary;
+	//public GameObject[] ClassicObjectsLibrary; //In order: Base, Stick, Disc, Env
+	//public GameObject[] ZenObjectsLibrary;
+	//public GameObject[] SteamObjectsLibrary;
+	//public GameObject[] ChineseObjectsLibrary;
+	//public GameObject[] SciFiObjectsLibrary;
+
+	public GameObject DiscTemplate;
 	
 	private float MAGIC_SeparateFactor = 600.0f;
-	
-	public GameObject myTest;
 	
 	public Texture Text_Exit;
 	public Texture Text_Up ;
@@ -34,13 +34,26 @@ public class Main_GUI : MonoBehaviour {
 	
 	private int bestScoreForThatDifficulty;
 	
-	public bool isTouching = false;
-	public bool isPushing = false;
+	//private bool isTouching = false;
+	//private bool isPushing = false;
 
 	private const bool TOUCH_ONLY=false;
 	
 	private string[] Symbols = {"I","II","III","VI","V","IV","IIV","IIIV","XI","X"};
-	
+
+
+	// GUI connection:
+
+	public GameObject GUI_PickLeft;
+	public GameObject GUI_PickCenter;
+	public GameObject GUI_PickRight;
+
+	public GameObject GUI_DropLeft;
+	public GameObject GUI_DropCenter;
+	public GameObject GUI_DropRight;
+
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -84,6 +97,7 @@ public class Main_GUI : MonoBehaviour {
 
 	void CreateSet(int _style)
 	{
+		/*
 		GameObject[] theLibrary = ClassicObjectsLibrary;
 		
 		if(_style==0)
@@ -96,12 +110,13 @@ public class Main_GUI : MonoBehaviour {
 			theLibrary = ChineseObjectsLibrary;		
 		if(_style==4)
 			theLibrary = SciFiObjectsLibrary;		
-		
-		//base
-		GameObject myBase = Instantiate(theLibrary[0]) as GameObject;
-		myBase.name="myBase";
+		*/
 
-		
+		//base
+		//GameObject myBase = Instantiate(theLibrary[0]) as GameObject;
+		//myBase.name="myBase";
+
+		/*
 		//Stick
 		for(int i=0;i<3;i++)
 		{
@@ -113,14 +128,17 @@ public class Main_GUI : MonoBehaviour {
 			if(_style ==4)	//ScyFy	
 				myStick.AddComponent<StaffBehaviour>();
 		}
-		
+		*/
+
+
 		//Discs
 		//float lastDiscHeight = myBase.gameObject.GetComponent<MeshFilter>().mesh.bounds.extents.y;
 		int numberOfDiscs = 5+PlayerPrefs.GetInt("LastDifficultyChoosen");
 		myDM.TheDiscList = new GameObject[numberOfDiscs];
 		for(int i=0;i< numberOfDiscs;i++)
 		{
-			GameObject myCurrentDisc = Instantiate(theLibrary[2]) as GameObject;
+			//GameObject myCurrentDisc = Instantiate(theLibrary[2]) as GameObject;
+			GameObject myCurrentDisc = Instantiate(DiscTemplate) as GameObject;
 			myCurrentDisc.name = "Disc_"+i;
 
 			float ratio = i / (float) numberOfDiscs;
@@ -159,10 +177,11 @@ public class Main_GUI : MonoBehaviour {
 			SelfLookAt MyComp = MyCurrentID.AddComponent<SelfLookAt>() as SelfLookAt;
 			MyComp.target = Camera.main.gameObject;
 		}
+		DiscTemplate.SetActive(false);
 		
 		//EnvMap
-		GameObject myEnvGO = Instantiate(theLibrary[3]) as GameObject;
-		myEnvGO.name="EnvieDeKiwi";
+		//GameObject myEnvGO = Instantiate(theLibrary[3]) as GameObject;
+		//myEnvGO.name="EnvieDeKiwi";
 		
 	}
 	
@@ -201,7 +220,7 @@ public class Main_GUI : MonoBehaviour {
 			}
 			else
 			{
-				isTouching=false;
+				//isTouching=false;
 			}
 			#endregion
 		}
@@ -209,7 +228,7 @@ public class Main_GUI : MonoBehaviour {
 		{
 			if (Input.touchCount > 0) 
 			{
-				isTouching=true;
+				//isTouching=true;
 				if(Input.GetTouch(0).tapCount   > 0)
 				{	
 					if(Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -260,19 +279,122 @@ public class Main_GUI : MonoBehaviour {
 			}	
 			else
 			{
-				isTouching=false;
+				//isTouching=false;
 			}
 		}
 		
 	}
+
+
+	public void OnButtonQuit()
+	{
+		Application.LoadLevel("MainMenu_01");
+	}
+
+	public void OnButtonPickLeft()
+	{
+		Debug.Log("OnButtonPickLeft Callback");
+		OnButtonPick(0);
+	}
+	public void OnButtonPickCenter()
+	{
+		Debug.Log("OnButtonPickCenter Callback");
+		OnButtonPick(1);
+	}
+	public void OnButtonPickRight()
+	{
+		Debug.Log("OnButtonPickRight Callback");
+		OnButtonPick(2);		
+	}
+	private void OnButtonPick(int _AxisIndex)
+	{
+		//We picked a Disc:
+		currentlySelected=myDM.TakeOff(_AxisIndex,false);
+		TogglingButtons();
+	}
+
+	public void OnButtonDropLeft()
+	{
+		Debug.Log("OnButtonDropLeft Callback");
+		OnButtonDrop(0);
+	}
+	public void OnButtonDropCenter()
+	{
+		Debug.Log("OnButtonDropCenter Callback");
+		OnButtonDrop(1);
+	}
+	public void OnButtonDropRight()
+	{
+		Debug.Log("OnButtonDropRight Callback");
+		OnButtonDrop(2);		
+	}
+	public void OnButtonDrop(int _AxisIndex)
+	{
+		Debug.Log("OnButtonDrop Callback");
+		
+		nbMoves++;
+		myDM.MoveDiscToAxis(currentlySelected, _AxisIndex);
+		currentlySelected=-1;
+		TogglingButtons();
+	}
+
+
+	private void TogglingButtons()
+	{
+		if(currentlySelected==-1)
+		{	//Nothing is selected, we allow picking on non-empty axis:
+			GUI_DropLeft.SetActive(false);
+			GUI_DropCenter.SetActive(false);
+			GUI_DropRight.SetActive(false);
+
+			if(myDM.isAxisEmpty(0))
+				GUI_PickLeft.SetActive(true);
+			if(myDM.isAxisEmpty(1))
+				GUI_PickCenter.SetActive(true);
+			if(myDM.isAxisEmpty(2))
+				GUI_PickRight.SetActive(true);
+
+		}
+		else
+		{	//Something is selected here, we activate its allowed possibility
+			GUI_PickLeft.SetActive(false);
+			GUI_PickCenter.SetActive(false);
+			GUI_PickRight.SetActive(false);
+
+			if(myDM.amIAllowed(currentlySelected,0))
+				GUI_DropLeft.SetActive(true);
+			if(myDM.amIAllowed(currentlySelected,1))
+				GUI_DropCenter.SetActive(true);
+			if(myDM.amIAllowed(currentlySelected,2))
+				GUI_DropRight.SetActive(true);
+
+		}
+
+
+	}
+
+
+	/*
+	GameObject getGUIButtonForAxis(int _AxisIndex)
+	{
+		if(_AxisIndex==0)
+			return GUI_PickLeft;
+		if(_AxisIndex==1)
+			return GUI_PickCenter;
+		if(_AxisIndex==2)
+			return GUI_PickRight;
+	}
+	*/
 	
 	void OnGUI ()
 	{
+		/*
 		if(GUI.Button(new Rect(Screen.width-Text_Exit.width,0,Text_Exit.width,Text_Exit.height),Text_Exit))
 		{
 			Application.LoadLevel("MainMenu_01");
 			//Application.Quit();
 		}
+		*/
 		
 		GUI.Label(new Rect(Screen.width-100,Text_Exit.height,100,36),"Score=\t\t"+nbMoves+"\nBest=\t\t"+bestScoreForThatDifficulty);
 		PlayerPrefs.SetInt("CurrentScore",nbMoves);
@@ -280,7 +402,7 @@ public class Main_GUI : MonoBehaviour {
 		
 		// BUTTON INTERFACE ********************************************************************************************************
 	
-			
+		/*	
 		if(currentlySelected==-1)
 		{
 			//Nothing is selected yet, so let's make it possible :
@@ -303,6 +425,9 @@ public class Main_GUI : MonoBehaviour {
 			}
 		}
 		else //There is a disc selected !
+		*/
+
+		/*
 		{
 			for(int AxeIndex =0; AxeIndex<3;AxeIndex++) //For all the three axes:
 			{
@@ -325,7 +450,7 @@ public class Main_GUI : MonoBehaviour {
 				}
 			}	
 		}
-			
+		*/	
 		
 		//VisibleDEBUG TOUCH ZONE
 		//GUI.Box(TouchZoneLeft,"*1*");

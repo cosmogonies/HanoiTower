@@ -52,7 +52,7 @@ public class MainMenu_GUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		LoadingScreen.active = false;
+		LoadingScreen.SetActive(false);
 		
 		MenuList = MenuList_ENG;
 		UpdatePayersPref();
@@ -78,19 +78,19 @@ public class MainMenu_GUI : MonoBehaviour {
 			//Start Game.
 			if(GUI.Button(new Rect(Screen.width*0.5f-64,ButtonLocationY[0],200,screenButtonHeight),MenuList[0]))
 			{
-				LoadingScreen.active = true;
+				LoadingScreen.SetActive(true);
 				
 				isPlaying=true;
 				PlayerPrefs.SetInt("LastDifficultyChoosen",LastDifficultyChoosenBuffer);
 				PlayerPrefs.SetInt("LastPlayedGame", Mathf.RoundToInt(Mathf.Pow(2,PlayerPrefs.GetInt("LastDifficultyChoosen")+5))-1);
 				PlayerPrefs.SetInt("CurrentScore",0);
-				Application.LoadLevel("Engine_02");
+				Application.LoadLevel("Level_Wood");
 			}
 			
 			//Resume Game
 			if(GUI.Button(new Rect(Screen.width*0.5f-64,ButtonLocationY[1],200,screenButtonHeight),MenuList[1]))
 			{
-				LoadingScreen.active = true;
+				LoadingScreen.SetActive(true);
 				
 				//PlayerPrefs.SetInt("LastDifficultyChoosen",LastDifficultyChoosenBuffer);
 				isPlaying=true;
