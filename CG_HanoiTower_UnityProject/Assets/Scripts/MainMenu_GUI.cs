@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+using UnityEngine.UI;
+
 public class MainMenu_GUI : MonoBehaviour {
 	
 	public GUISkin MAinGUISkin;
@@ -36,7 +38,7 @@ public class MainMenu_GUI : MonoBehaviour {
 	private bool isChoosingDifficulty=false;
 	public string ChoosenDifficulty;
 	
-	private int LastDifficultyChoosenBuffer=0;
+	//private int LastDifficultyChoosenBuffer=0;
 	
 	private bool isChoosingSkin=false;
 	public string ChoosenSkin;
@@ -48,6 +50,24 @@ public class MainMenu_GUI : MonoBehaviour {
 	
 	public GameObject LoadingScreen;
 	
+
+	bool isStartingGame=false;
+	public GameObject CanvasMain;
+	public GameObject CanvasCustomize;
+
+
+	public GameObject PanelRule;
+	public GameObject PanelLanguage;
+	//public GameObject[] LanguageButtons;
+
+	public GameObject PanelDifficulty;
+	public GameObject PanelStyle;
+
+	//public Color TextColor;
+	//public Color SelectedTextColor;
+
+
+
 
 	// Use this for initialization
 	void Start () 
@@ -68,13 +88,237 @@ public class MainMenu_GUI : MonoBehaviour {
 		}
          		
 	}
+
+
+	public void OnButton_ViewRules()
+	{	//Toggling view Rules visibility.
+		if(isChoosingLanguage)
+			OnButton_ChoseLanguageMenu();
+
+		isViewingRules = !isViewingRules;
+
+		if(isViewingRules)
+			PanelRule.SetActive(true);
+		else
+			PanelRule.SetActive(false);
+
+	}
+
+	public void OnButton_ChoseLanguageMenu()
+	{
+		if(isViewingRules)
+			OnButton_ViewRules();
+
+		isChoosingLanguage = ! isChoosingLanguage;
+
+		if(isChoosingLanguage)
+			PanelLanguage.SetActive(true);
+		else
+			PanelLanguage.SetActive(false);
+
+	}
+
+	public void OnButton_ChooseLanguage(int _LanguageIndex)
+	{
+		PlayerPrefs.SetInt("LastLanguageChoosen",_LanguageIndex);
+
+		refreshLanguageButtons(0, _LanguageIndex);
+		refreshLanguageButtons(1, _LanguageIndex);
+		refreshLanguageButtons(2, _LanguageIndex);
+
+	}
+	private void refreshLanguageButtons(int _Index, int  _LanguageIndex)
+	{
+		//We nee to find and put in italic the current selected language
+		bool IsSelected = (_LanguageIndex == _Index);
+		/*
+		UnityEngine.UI.Text toto = LanguageButtons[_Index].GetComponentInChildren<UnityEngine.UI.Text>() as UnityEngine.UI.Text;
+
+
+		if(IsSelected)
+		{
+			toto.fontStyle = FontStyle.BoldAndItalic;
+			//toto.color = SelectedTextColor;
+		}
+		else
+		{
+			toto.fontStyle = FontStyle.Normal;
+			//toto.color = TextColor;
+		}
+*/
+	}
+
+
+	public void OnToggle_Language(int _LanguageIndex)
+	{
+		//Debug.Log(UnityEngine.EventSystems.EventSystem.current.name);
+
+		//Debug.Log(UnityEngine.EventSystems.EventSystem.current.gameObject.name);
+
 	
+		//TODO: how to know which widgzet trigger the event.
+
+		//Debug.Log(UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject());
+
+		//Debug.Log(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name);
+
+		GameObject EventSource = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+
+		//UnityEngine.EventSystems.EventSystem.current.
+
+		UnityEngine.UI.Toggle toto = EventSource.GetComponent<Toggle>() as Toggle;
+
+		if( toto.isOn )
+		{
+			//Debug.Log (_LanguageIndex + "trigerred");
+		}
+
+		Toggle[] Toggles = PanelLanguage.GetComponentsInChildren<Toggle>() as Toggle[];
+		for (int i = 0; i < Toggles.Length; i++) 
+		{
+			if( Toggles[i].gameObject ==  UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject)
+				if(Toggles[i].isOn)
+					if(i==_LanguageIndex)
+						localizeGUI(_LanguageIndex);
+						//Debug.Log (i + "trigerred");
+
+		}
+	}
+	public void OnToggle_ChooseDiffculty(int _DifficultyIndex)
+	{
+		GameObject EventSource = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+
+		Toggle[] Toggles = PanelDifficulty.GetComponentsInChildren<Toggle>() as Toggle[];
+		for (int i = 0; i < Toggles.Length; i++) 
+		{
+			if( Toggles[i].gameObject ==  EventSource)
+				if(Toggles[i].isOn)
+					if(i==_DifficultyIndex)
+						PlayerPrefs.SetInt("LastDifficultyChoosen",_DifficultyIndex);
+		}
+	}
+	public void OnToggle_ChooseSkin(int _SkinIndex)
+	{
+		GameObject EventSource = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+		
+		Toggle[] Toggles = PanelStyle.GetComponentsInChildren<Toggle>() as Toggle[];
+		for (int i = 0; i < Toggles.Length; i++) 
+		{
+			if( Toggles[i].gameObject ==  EventSource)
+				if(Toggles[i].isOn)
+					if(i==_SkinIndex)
+						PlayerPrefs.SetInt("LastSkinChoosen",_SkinIndex);
+		}
+	}
+
+
+
+	private void localizeGUI(int _LanguageIndex)
+	{
+		Debug.Log ("localizeGUI for Language = "+_LanguageIndex);
+		PlayerPrefs.SetInt("LastLanguageChoosen",_LanguageIndex);
+	}
+
+
+
+	/*
+	public void OnToggle_Language(GameObject _SourceEvent)
+	{
+		//Debug.Log (_LanguageIndex+"trigerred");
+
+		UnityEngine.UI.Toggle toto = _SourceEvent.GetComponent<Toggle>() as Toggle;
+
+		if( toto.isOn )
+		{
+
+
+			Debug.Log ("trigerred");
+		}
+
+		
+
+	}
+	*/
+
+	public void OnButton_StartANewGame()
+	{
+		isStartingGame = ! isStartingGame;
+		
+		if(isStartingGame)
+		{
+			CanvasCustomize.SetActive(true);
+			CanvasMain.SetActive(false);
+		}
+
+
+
+
+	}
+
+	public void OnButton_ResumeGame()
+	{
+		isPlaying=true;
+		Application.LoadLevel("Level_Wood");
+	}
+	public void OnButton_StartGame()
+	{
+		//LoadingScreen.SetActive(true);
+		
+		isPlaying=true;
+		//PlayerPrefs.SetInt("LastDifficultyChoosen",LastDifficultyChoosenBuffer);
+
+		PlayerPrefs.SetInt("LastPlayedGame", Mathf.RoundToInt(Mathf.Pow(2,PlayerPrefs.GetInt("LastDifficultyChoosen")+5))-1);
+
+		PlayerPrefs.SetInt("CurrentScore",0);
+
+		Application.LoadLevel("Level_Wood");
+	}
+
+
+	public void OnButton_ChooseDifficultyMenu()
+	{
+		
+		if(isChoosingSkin)
+			OnButton_ChooseSkinMenu();
+		
+		isChoosingDifficulty = ! isChoosingDifficulty;
+		
+		if(isChoosingDifficulty)
+			PanelDifficulty.SetActive(true);
+		else
+			PanelDifficulty.SetActive(false);
+	}
+
+	public void OnButton_ChooseSkinMenu()
+	{
+		if(isChoosingDifficulty)
+			OnButton_ChooseDifficultyMenu();
+		
+		isChoosingSkin = ! isChoosingSkin;
+		
+		if(isChoosingSkin)
+			PanelStyle.SetActive(true);
+		else
+			PanelStyle.SetActive(false);
+	}
+
+
+
+
+
+
 	// Update is called once per frame
 	void OnGUI ()
 	{
+
+
+
+
 		GUI.skin = MAinGUISkin;
 		if(!isPlaying)
 		{
+
+			/*
 			//Start Game.
 			if(GUI.Button(new Rect(Screen.width*0.5f-64,ButtonLocationY[0],200,screenButtonHeight),MenuList[0]))
 			{
@@ -86,7 +330,9 @@ public class MainMenu_GUI : MonoBehaviour {
 				PlayerPrefs.SetInt("CurrentScore",0);
 				Application.LoadLevel("Level_Wood");
 			}
-			
+			*/
+
+			/*
 			//Resume Game
 			if(GUI.Button(new Rect(Screen.width*0.5f-64,ButtonLocationY[1],200,screenButtonHeight),MenuList[1]))
 			{
@@ -96,8 +342,8 @@ public class MainMenu_GUI : MonoBehaviour {
 				isPlaying=true;
 				Application.LoadLevel("Engine_02");
 			}
-			
-			
+			*/
+			/*			
 			//*** BUTTON Rules. ***
 			if(!isViewingRules)
 			{
@@ -131,9 +377,9 @@ public class MainMenu_GUI : MonoBehaviour {
 				GUI.Label(new Rect(startPosX,5.0f,Screen.width-startPosX-5,Screen.height-5.0f),RulesHanoi);
 				GUI.skin = MAinGUISkin;
 			}
+			*/
 			
-			
-			
+			/*
 			//*** BUTTON Difficulty. ***
 			if(!isChoosingDifficulty)
 			{
@@ -168,8 +414,9 @@ public class MainMenu_GUI : MonoBehaviour {
 				
 				
 			}
-			
+			*/
 		
+			/*
 			//*** BUTTON Style. ***
 			if(!isChoosingSkin)
 			{
@@ -200,7 +447,8 @@ public class MainMenu_GUI : MonoBehaviour {
 				if(ChoosenSkin==SkinList[4])
 					PlayerPrefs.SetInt("LastSkinChoosen",4);
 			}
-			
+*/
+			/*
 			//*** BUTTON Language ***
 			if(!isChoosingLanguage)
 			{
@@ -235,13 +483,14 @@ public class MainMenu_GUI : MonoBehaviour {
 					}
 				}
 			}
-			
+			*/
+			/*
 			//*** BUTTON Quit ***
 			if(GUI.Button(new Rect(Screen.width*0.5f-64,ButtonLocationY[6],200,screenButtonHeight),MenuList[6])) //TODO: Make it smoother
 			{			
 				Application.Quit();
 			}
-			
+			*/
 			
 //			if(PlayerPrefs.HasKey("DEBUG"))
 //			{
